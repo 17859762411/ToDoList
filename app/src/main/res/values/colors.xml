@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorButton">#4FC3F7</color>
+    <color name="google_blue">#2D85F0</color>
+    <color name="google_yellow">#FFBC32</color>
+    <color name="google_green">#0AA858</color>
+    <color name="google_red">#F4433C</color>
+    <color name="little_white">#F3F2FB</color>
+    <color name="little_zi">#D7D6FC</color>
+    <color name="orange_red">#ff4f4f</color>
+    <color name="gray">#7f7f7f</color>
+    <color name="little_gray">#277F7F7F</color>
+    <color name="huawei_red">#ef1c25</color>
+    <color name="fab">@color/google_blue</color>
+</resources>

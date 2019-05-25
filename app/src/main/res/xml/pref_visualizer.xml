@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="@string/pref_top_imageview_switch"
+        android:summaryOff="隐藏"
+        android:summaryOn="显示"
+        android:title="顶部图片设置" />
+
+</PreferenceScreen>

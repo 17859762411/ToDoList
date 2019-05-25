@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">ToDoList</string>
+    <string name="action_settings">Settings</string>
+    <string name="todo_title">标    题</string>
+    <string name="beizhu">备    注</string>
+    <string name="tianjia">添    加</string>
+    <string name="tv_degree">重要程度</string>
+    <string name="date_picker_title">Date of Todo :</string>
+
+    <string name="icon_about">icon_about</string>
+    <string name="version">1.0</string>
+    <string name="slogan">Assassin Unity</string>
+    <string name="year_from_to">©2019–2019 lvtong.com\nAll rights reserved.</string>
+    <string name="open_source">开源相关</string>
+    <string name="about_us">关于</string>
+
+    <string name="pref_top_imageview_switch">top_imageview_switch</string>
+</resources>
