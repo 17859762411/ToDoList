@@ -15,4 +15,6 @@
     <string name="about_us">关于</string>
 
     <string name="pref_top_imageview_switch">top_imageview_switch</string>
+    <string name="myDay">我的一天</string>
+    <string name="task">任务</string>
 </resources>
