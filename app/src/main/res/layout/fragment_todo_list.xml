@@ -28,20 +28,18 @@
         <ImageView
             android:id="@+id/top_imageview"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:elevation="5dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp"
+            android:layout_height="100dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/img000_changed"
+            android:clipToPadding="false"
             android:contentDescription="@string/date_picker_title"
+            android:elevation="5dp"
             android:fitsSystemWindows="true"
             android:scaleType="fitXY"
-            android:background="@drawable/list_item"
-            android:src="@drawable/background"
-            app:layout_collapseMode="parallax"
-            android:clipToPadding="false"
-            />
+            app:layout_collapseMode="parallax" />
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -91,7 +89,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/img027"
+        android:src="@drawable/img068_slide"
         android:scaleType="fitXY"
         android:textSize="24sp" />
 </android.support.v4.widget.DrawerLayout>

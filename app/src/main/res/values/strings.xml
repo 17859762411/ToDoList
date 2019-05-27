@@ -9,7 +9,7 @@
 
     <string name="icon_about">icon_about</string>
     <string name="version">1.0</string>
-    <string name="slogan">Assassin Unity</string>
+    <string name="slogan">Happy EveryDay</string>
     <string name="year_from_to">©2019–2019 lvtong.com\nAll rights reserved.</string>
     <string name="open_source">开源相关</string>
     <string name="about_us">关于</string>
@@ -17,4 +17,5 @@
     <string name="pref_top_imageview_switch">top_imageview_switch</string>
     <string name="myDay">我的一天</string>
     <string name="task">任务</string>
+    <string name="check_update">检查更新</string>
 </resources>
