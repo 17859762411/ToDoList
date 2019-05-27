@@ -60,8 +60,11 @@ public class TodoFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-
-        TodoLab.get(getActivity()).updateTodo(mTodo);
+        if (TextUtils.isEmpty(mTodo.getmTitle())){
+            TodoLab.get(getActivity()).removeTodo(mTodo);
+        }else {
+            TodoLab.get(getActivity()).updateTodo(mTodo);
+        }
     }
 
     @Nullable
@@ -75,10 +78,14 @@ public class TodoFragment extends Fragment {
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.isEmpty(mBeizhuField.getText())){
+                    mTodo.setmBeizhu("备注未填写");
+                }
                 if (TextUtils.isEmpty(mTitleField.getText())){
                     Toast.makeText(getActivity(), "标题为空！", Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(getActivity(), "添加成功", Toast.LENGTH_SHORT).show();
+                    getActivity().finish();
                 }
             }
         });
@@ -146,6 +153,7 @@ public class TodoFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mTodo.setmBeizhu(s.toString());
+
             }
 
             @Override
