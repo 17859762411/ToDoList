@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -173,7 +174,11 @@ public class TodoFragment extends Fragment {
 
     private void updateDate() {
         if (mTodo.getmDate() != null){
-            mDateButton.setText(mTodo.getmDate().toString());
+            //日期格式化
+            CharSequence cs = "yyyy, MMMM dd,EEEE";
+            //星期，月份 几号，几年   例如：星期一，十一月 5， 2018
+            CharSequence re = DateFormat.format(cs,mTodo.getmDate());
+            mDateButton.setText(re.toString());
         }
     }
 }
