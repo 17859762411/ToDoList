@@ -11,7 +11,7 @@
 
     <gradient
         android:startColor="@color/google_red"
-        android:endColor="@color/google_yellow"
+        android:endColor="@color/huawei_red"
         android:type="radial"
         android:angle="180"/>
 

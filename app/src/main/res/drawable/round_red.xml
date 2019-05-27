@@ -15,7 +15,7 @@
         android:top="1dp"/>
     <gradient
         android:type="radial"
-        android:startColor="@color/little_zi"
-        android:endColor="@color/google_yellow"
+        android:startColor="@color/huawei_red"
+        android:endColor="@color/google_red"
         android:gradientRadius="32dp"/>
 </shape>
