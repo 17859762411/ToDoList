@@ -37,6 +37,10 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
     private TodoAdapter mAdapter;
     private FloatingActionButton mFab;
     private ImageView mTop;
+    private TextView mNullTodoListTextView;
+
+    private int remainY;
+    private boolean isShow = true;
 
 
     @Override
@@ -62,11 +66,30 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_todo_list,container,false);
         //实现toolbar
-        Toolbar mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        final Toolbar mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
+
+        mNullTodoListTextView = (TextView)view.findViewById(R.id.null_todo_list);
 
         mTodoRecyclerView = (RecyclerView)view.findViewById(R.id.todo_recycler_view);
         mTodoRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        mTodoRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == 0){
+                    mFab.show();
+                }else {
+                    mFab.hide();
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
 
         mFab = (FloatingActionButton)view.findViewById(R.id.fab);
         mFab.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +164,11 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
         }else {
             mAdapter.setmTodos(todos);
             mAdapter.notifyDataSetChanged();
+        }
+        if (todos.size() != 0) {
+            mNullTodoListTextView.setVisibility(View.INVISIBLE);
+        } else {
+            mNullTodoListTextView.setVisibility(View.VISIBLE);
         }
 
     }

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-
 <android.support.design.widget.CoordinatorLayout
     android:id="@+id/main_content"
     android:layout_width="match_parent"
@@ -23,12 +22,13 @@
             android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:layout_scrollFlags="scroll|enterAlways"
             />
 
         <ImageView
             android:id="@+id/top_imageview"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="90dp"
             android:elevation="5dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"
@@ -37,21 +37,41 @@
             android:contentDescription="@string/date_picker_title"
             android:fitsSystemWindows="true"
             android:scaleType="fitXY"
+            android:background="@drawable/list_item"
             android:src="@drawable/background"
             app:layout_collapseMode="parallax"
+            android:clipToPadding="false"
             />
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/todo_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/todo_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp" />
+    <TextView
+        android:id="@+id/null_todo_list"
+        style="?android:listSeparatorTextViewStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:textColor="@color/google_blue"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="没有待办事项\n快点击右下角添加吧！" />
+</RelativeLayout>
 
-        </android.support.v7.widget.RecyclerView>
+
+
 
     </LinearLayout>
+
 
 
     <android.support.design.widget.FloatingActionButton
