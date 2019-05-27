@@ -1,16 +1,19 @@
 package com.android.lvtong.todolist;
 
+
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,7 +23,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.lvtong.todolist.menu.AboutActivity;
 import com.android.lvtong.todolist.menu.SettingsActivity;
@@ -39,7 +41,6 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
-
     }
 
     private void setupShardPreference() {
@@ -57,14 +58,17 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.fragment_todo_list,container,false);
+        //实现toolbar
+        Toolbar mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
 
         mTodoRecyclerView = (RecyclerView)view.findViewById(R.id.todo_recycler_view);
         mTodoRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         mFab = (FloatingActionButton)view.findViewById(R.id.fab);
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "click fab!", Toast.LENGTH_SHORT).show();
                 Todo todo = new Todo();
                 TodoLab.get(getActivity()).addmTodo(todo);
                 Intent intent = TodoPagerActivity
@@ -102,11 +106,13 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+//            case R.id.home:
+//                mDrawerLayout.openDrawer(GravityCompat.START);
+//                break;
             case R.id.action_settings:
                 Intent intent1 = new Intent();
                 intent1.setClass(getActivity(), SettingsActivity.class);
                 startActivity(intent1);
-                Toast.makeText(getActivity(), "settings", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.about_us:
                 Intent intent2 = new Intent();
@@ -116,8 +122,10 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
                 default:
                     return super.onOptionsItemSelected(item);
         }
+//        return true;
 
     }
+
 
     private void updateUI() {
         TodoLab todoLab = TodoLab.get(getActivity());

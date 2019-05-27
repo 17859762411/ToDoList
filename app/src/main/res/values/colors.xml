@@ -16,6 +16,6 @@
     <color name="huawei_red">#ef1c25</color>
     <color name="fab">@color/google_blue</color>
     <color name="start_color">#FF8A65</color>
-    <color name="end_color">#FFCCBC</color>
+    <color name="end_color">#FFAB91</color>
 
 </resources>

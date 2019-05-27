@@ -13,7 +13,8 @@
         <activity android:name=".menu.SettingsActivity"
             android:parentActivityName=".TodoListActivity"/>
         <activity android:name=".TodoListActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:theme="@style/SlideTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
