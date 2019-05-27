@@ -1,15 +1,18 @@
 package com.android.lvtong.todolist;
 
 
-import android.app.ActionBar;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -96,7 +99,9 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
         super.onDestroy();
         PreferenceManager.getDefaultSharedPreferences(getActivity()).unregisterOnSharedPreferenceChangeListener(this);
     }
-
+    /**
+     * menu部分
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -158,12 +163,38 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
         private TextView mTitleTV;
         private TextView mBeizhuTV;
         private Button mImportant;
+        //删除item
+        private void removeItem() {
+            TodoLab.get(getActivity()).removeTodo(mTodo);
+            updateUI();
+            mAdapter.notifyDataSetChanged();
+        }
 
 
 
         public TodoHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.list_item_todo,parent,false));
             itemView.setOnClickListener(this);
+            //长按弹窗删除item
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("确认要删除此代办事项?")
+                            .setMessage("标题:"+mTodo.getmTitle()+"\n"
+                                    +"日期:"+TodoFragment.getDateString(mTodo.getmDate())+"\n"
+                                    +"重要程度:"+mTodo.getmImportance())
+                            .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    removeItem();
+                                }
+                            })
+                            .setNegativeButton("取消",null)
+                            .create().show();
+                    return true;
+                }
+            });
 
             mTitleTV = (TextView)itemView.findViewById(R.id.todo_title);
             mBeizhuTV = (TextView)itemView.findViewById(R.id.todo_beizhu);

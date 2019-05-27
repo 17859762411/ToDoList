@@ -175,10 +175,19 @@ public class TodoFragment extends Fragment {
     private void updateDate() {
         if (mTodo.getmDate() != null){
             //日期格式化
-            CharSequence cs = "yyyy, MMMM dd,EEEE";
-            //星期，月份 几号，几年   例如：星期一，十一月 5， 2018
-            CharSequence re = DateFormat.format(cs,mTodo.getmDate());
-            mDateButton.setText(re.toString());
+            mDateButton.setText(getDateString(mTodo.getmDate()));
         }
+    }
+
+    /**将date对象转为年月日星期格式string
+     *
+     * @param date Date时间戳
+     * @return 返回string
+     */
+    public static String getDateString(Date date) {
+        CharSequence cs = "yyyy, MMMM dd,EEEE";
+        //几年,月份,几号,星期
+        CharSequence re = DateFormat.format(cs,date);
+        return re.toString();
     }
 }

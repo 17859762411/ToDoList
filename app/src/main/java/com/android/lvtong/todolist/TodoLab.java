@@ -80,6 +80,13 @@ public class TodoLab {
                 TodoTable.Cols.UUID + " = ?",
                 new String[]{ uuidString });
     }
+    //删除
+    public void removeTodo(Todo todo) {
+        String uuidString = todo.getmId().toString();
+        mDatabase.delete(TodoTable.NAME,
+                TodoTable.Cols.UUID + " = ?",
+                new String[] { uuidString });
+}
 
     private TodoCursorWrapper queryTodos(String whereClause, String[] whereArgs){
         Cursor cursor = mDatabase.query(
