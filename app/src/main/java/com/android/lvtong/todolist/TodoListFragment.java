@@ -12,6 +12,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.lvtong.todolist.menu.AboutActivity;
 import com.android.lvtong.todolist.menu.SettingsActivity;
@@ -38,6 +42,7 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
     private FloatingActionButton mFab;
     private ImageView mTop;
     private TextView mNullTodoListTextView;
+    private DrawerLayout mDrawerLayout;
 
     private int remainY;
     private boolean isShow = true;
@@ -68,6 +73,13 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
         //实现toolbar
         final Toolbar mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(mToolbar);
+        //添加ic_menu图标
+        mDrawerLayout = (DrawerLayout)view.findViewById(R.id.drawer_layout);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        }
 
         mNullTodoListTextView = (TextView)view.findViewById(R.id.null_todo_list);
 
@@ -134,9 +146,10 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-//            case R.id.home:
-//                mDrawerLayout.openDrawer(GravityCompat.START);
-//                break;
+            case android.R.id.home:
+                Toast.makeText(getActivity(), "点击了HomeAsUp", Toast.LENGTH_SHORT).show();
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
             case R.id.action_settings:
                 Intent intent1 = new Intent();
                 intent1.setClass(getActivity(), SettingsActivity.class);
@@ -150,7 +163,6 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
                 default:
                     return super.onOptionsItemSelected(item);
         }
-//        return true;
 
     }
 
