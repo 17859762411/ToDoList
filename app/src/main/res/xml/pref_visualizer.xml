@@ -13,8 +13,8 @@
         android:icon="@drawable/red_heart"
         android:defaultValue="true"
         android:key="@string/pref_button_vibrate"
-        android:summaryOff="震动已关闭"
-        android:summaryOn="震动已开启"
-        android:title="按钮震动" />
+        android:summaryOff="关闭"
+        android:summaryOn="开启"
+        android:title="长按震动" />
 
 </PreferenceScreen>
