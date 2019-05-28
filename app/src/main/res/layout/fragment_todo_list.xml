@@ -64,14 +64,7 @@
         android:layout_marginRight="16dp"
         android:text="没有待办事项\n快点击右下角添加吧！" />
 </RelativeLayout>
-
-
-
-
     </LinearLayout>
-
-
-
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
