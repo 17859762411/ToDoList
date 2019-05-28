@@ -2,7 +2,10 @@ package com.android.lvtong.todolist;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,6 +27,8 @@ import android.widget.Toast;
 import java.util.Date;
 import java.util.UUID;
 
+import static android.content.Context.VIBRATOR_SERVICE;
+
 public class TodoFragment extends Fragment {
 
     private static final String ARG_TODO_ID = "todo_id";
@@ -40,6 +45,7 @@ public class TodoFragment extends Fragment {
     private ArrayAdapter<String> mAdapter;
 
     Boolean isSpinner = false;
+    private Vibrator vibrator;
 
     public static TodoFragment newInstance(UUID todoID) {
         Bundle args = new Bundle();
@@ -73,11 +79,13 @@ public class TodoFragment extends Fragment {
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_todo, container, false);
+        vibrator = (Vibrator)getActivity().getSystemService(VIBRATOR_SERVICE);
 
         mAddButton = (Button)v.findViewById(R.id.btn_add);
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                vibrateIt();
                 if (TextUtils.isEmpty(mBeizhuField.getText())){
                     mTodo.setmBeizhu("备注未填写");
                 }
@@ -197,5 +205,15 @@ public class TodoFragment extends Fragment {
         //几年,月份,几号,星期
         CharSequence re = DateFormat.format(cs,date);
         return re.toString();
+    }
+    /**
+     * 点击震动方法
+     */
+    private void vibrateIt() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            ((Vibrator)getActivity().getSystemService(VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(30, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            ((Vibrator)getActivity().getSystemService(VIBRATOR_SERVICE)).vibrate(30);
+        }
     }
 }

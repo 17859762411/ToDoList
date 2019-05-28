@@ -6,7 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -35,6 +38,8 @@ import com.android.lvtong.todolist.menu.AboutActivity;
 import com.android.lvtong.todolist.menu.SettingsActivity;
 
 import java.util.List;
+
+import static android.content.Context.VIBRATOR_SERVICE;
 
 public class TodoListFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     private RecyclerView mTodoRecyclerView;
@@ -219,6 +224,7 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
+                    vibrateIt();
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("确认要删除此代办事项?")
                             .setMessage("标题:"+mTodo.getmTitle()+"\n"
@@ -283,6 +289,14 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
 
         public void setmTodos(List<Todo> todos){
             mTodos = todos;
+        }
+    }
+
+    private void vibrateIt() {
+        if (Build.VERSION.SDK_INT >= 26) {
+            ((Vibrator)getActivity().getSystemService(VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(30, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            ((Vibrator)getActivity().getSystemService(VIBRATOR_SERVICE)).vibrate(30);
         }
     }
 }
