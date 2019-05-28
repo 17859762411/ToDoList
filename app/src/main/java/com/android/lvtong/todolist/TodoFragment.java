@@ -27,6 +27,7 @@ import android.widget.Toast;
 import java.util.Date;
 import java.util.UUID;
 
+import static android.Manifest.permission.VIBRATE;
 import static android.content.Context.VIBRATOR_SERVICE;
 
 public class TodoFragment extends Fragment {
@@ -85,7 +86,6 @@ public class TodoFragment extends Fragment {
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                vibrateIt();
                 if (TextUtils.isEmpty(mBeizhuField.getText())){
                     mTodo.setmBeizhu("备注未填写");
                 }
@@ -205,15 +205,5 @@ public class TodoFragment extends Fragment {
         //几年,月份,几号,星期
         CharSequence re = DateFormat.format(cs,date);
         return re.toString();
-    }
-    /**
-     * 点击震动方法
-     */
-    private void vibrateIt() {
-        if (Build.VERSION.SDK_INT >= 26) {
-            ((Vibrator)getActivity().getSystemService(VIBRATOR_SERVICE)).vibrate(VibrationEffect.createOneShot(30, VibrationEffect.DEFAULT_AMPLITUDE));
-        } else {
-            ((Vibrator)getActivity().getSystemService(VIBRATOR_SERVICE)).vibrate(30);
-        }
     }
 }

@@ -42,15 +42,19 @@ import java.util.List;
 import static android.content.Context.VIBRATOR_SERVICE;
 
 public class TodoListFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+
     private RecyclerView mTodoRecyclerView;
     private TodoAdapter mAdapter;
     private FloatingActionButton mFab;
     private ImageView mTop;
     private TextView mNullTodoListTextView;
     private DrawerLayout mDrawerLayout;
+    private boolean mVibrate=true;
 
     private int remainY;
     private boolean isShow = true;
+
+    private static final String VIBRATE = "vibrate";
 
 
     @Override
@@ -59,16 +63,24 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
         setHasOptionsMenu(true);
 
     }
-
+    //偏好设置
     private void setupShardPreference() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         //隐藏头图
-        if (sharedPreferences.getBoolean("top_imageview_switch",true)){
-            mTop.setVisibility(View.VISIBLE);
-        }else{
-            mTop.setVisibility(View.GONE);
-        }
+        mTop.setVisibility(sharedPreferences.getBoolean("top_imageview_switch",true)?View.VISIBLE:View.GONE);
+        mVibrate = sharedPreferences.getBoolean("button_vibrate",true);
         sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    }
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(getString(R.string.pref_top_imageview_switch))){
+            mTop.setVisibility(sharedPreferences.getBoolean("top_imageview_switch",true)?View.VISIBLE:View.GONE);
+
+        }
+        if (key.equals(getString(R.string.pref_button_vibrate))){
+            mVibrate = sharedPreferences.getBoolean("button_vibrate", true);
+            System.out.println("button_vibrate = "+ mVibrate);
+        }
     }
 
     @Nullable
@@ -190,16 +202,7 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
 
     }
 
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(getString(R.string.pref_top_imageview_switch))){
-            if (sharedPreferences.getBoolean("top_imageview_switch",true)){
-                mTop.setVisibility(View.VISIBLE);
-            }else{
-                mTop.setVisibility(View.GONE);
-            }
-        }
-    }
+
 
     private class TodoHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -224,7 +227,9 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    vibrateIt();
+                    if (mVibrate){
+                        vibrateIt();
+                    }
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("确认要删除此代办事项?")
                             .setMessage("标题:"+mTodo.getmTitle()+"\n"

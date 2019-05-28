@@ -3,10 +3,18 @@
     >
 
     <SwitchPreference
+        android:icon="@drawable/rabbit"
         android:defaultValue="true"
         android:key="@string/pref_top_imageview_switch"
         android:summaryOff="隐藏"
         android:summaryOn="显示"
         android:title="顶部图片设置" />
+    <SwitchPreference
+        android:icon="@drawable/red_heart"
+        android:defaultValue="true"
+        android:key="@string/pref_button_vibrate"
+        android:summaryOff="震动已关闭"
+        android:summaryOn="震动已开启"
+        android:title="按钮震动" />
 
 </PreferenceScreen>
