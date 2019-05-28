@@ -164,7 +164,6 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                Toast.makeText(getActivity(), "点击了HomeAsUp", Toast.LENGTH_SHORT).show();
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.action_settings:
