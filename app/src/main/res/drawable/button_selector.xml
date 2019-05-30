@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--三种状态设置 被按下 被触摸(激活) 被选中-->
+    <item android:drawable="@drawable/button_press" android:state_pressed="true"/>
+    <item android:drawable="@drawable/button_press" android:state_accelerated="true"/>
+    <item android:drawable="@drawable/button_press" android:state_activated="true"/>
+    <!--未选中设置-->
+    <item android:drawable="@drawable/button_normal"/>
+
+</selector>
