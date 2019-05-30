@@ -19,4 +19,5 @@
     <string name="task">任务</string>
     <string name="check_update">检查更新</string>
     <string name="pref_button_vibrate">button_vibrate</string>
+    <string name="no_todo_please_add">没有待办事项 快点击右下角添加吧！</string>
 </resources>

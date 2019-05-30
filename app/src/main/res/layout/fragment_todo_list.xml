@@ -51,18 +51,20 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginRight="16dp" />
-    <TextView
-        android:id="@+id/null_todo_list"
-        style="?android:listSeparatorTextViewStyle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textSize="24sp"
-        android:textColor="@color/google_blue"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:text="没有待办事项\n快点击右下角添加吧！" />
+        <TextView
+            android:id="@+id/null_todo_list"
+            style="?android:listSeparatorTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="32sp"
+            android:textColor="@color/google_blue"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/jiantou_changed"
+            android:text="@string/no_todo_please_add" />
+
 </RelativeLayout>
     </LinearLayout>
     <android.support.design.widget.FloatingActionButton

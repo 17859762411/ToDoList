@@ -67,6 +67,9 @@ public class TodoFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        if (TextUtils.isEmpty(mBeizhuField.getText())){
+            mTodo.setmBeizhu("备注未填写");
+        }
         if (TextUtils.isEmpty(mTodo.getmTitle())){
             TodoLab.get(getActivity()).removeTodo(mTodo);
         }else {
