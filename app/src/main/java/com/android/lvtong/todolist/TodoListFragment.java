@@ -17,6 +17,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -230,18 +231,46 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
                         vibrateIt();
                     }
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("确认要删除此代办事项?")
-                            .setMessage("标题:"+mTodo.getmTitle()+"\n"
-                                    +"日期:"+TodoFragment.getDateString(mTodo.getmDate())+"\n"
-                                    +"重要程度:"+mTodo.getmImportance())
-                            .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                    builder.setTitle("请选择以下操作之一：")
+                            .setPositiveButton("分享", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    removeItem();
+                                    ShareCompat.IntentBuilder
+                                            //传入Activity
+                                            .from(getActivity())
+                                            //设置数据
+                                            .setText("标题:"+mTodo.getmTitle()+"\n"
+                                                    +"备注:"+mTodo.getmBeizhu()+"\n"
+                                                    +"日期:"+TodoFragment.getDateString(mTodo.getmDate())+"\n"
+                                                    +"重要程度:"+mTodo.getmImportance())
+                                            //设置选择器标题
+                                            .setChooserTitle("分享")
+                                            //分享数据的类型
+                                            .setType("text/plain")
+                                            //启动
+                                            .startChooser();
                                 }
                             })
-                            .setNegativeButton("取消",null)
+                            .setNegativeButton("删除", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                    builder.setTitle("确认要删除此代办事项?")
+                                            .setMessage("标题:"+mTodo.getmTitle()+"\n"
+                                                    +"日期:"+TodoFragment.getDateString(mTodo.getmDate())+"\n"
+                                                    +"重要程度:"+mTodo.getmImportance())
+                                            .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    removeItem();
+                                                }
+                                            })
+                                            .setNegativeButton("取消",null)
+                                            .create().show();
+                                }
+                            })
                             .create().show();
+
                     return true;
                 }
             });

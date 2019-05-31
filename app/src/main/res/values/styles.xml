@@ -1,11 +1,11 @@
 
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">#FFFFFF</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/google_red</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="overlapAnchor">false</item>
     </style>
@@ -16,9 +16,9 @@
 
     <style name="SlideTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/google_blue</item>
+        <item name="colorPrimaryDark">@color/google_blue</item>
+        <item name="colorAccent">@color/google_red</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="overlapAnchor">false</item>
     </style>
@@ -27,6 +27,7 @@
         <item name="android:background">@drawable/button</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#ffffff</item>
     </style>
 
     <style name="RoundButtonStyle" parent="Widget.AppCompat.Button.Borderless">
