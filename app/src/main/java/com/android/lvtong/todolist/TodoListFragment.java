@@ -1,6 +1,8 @@
 package com.android.lvtong.todolist;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +25,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -63,6 +66,7 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
         setHasOptionsMenu(true);
 
     }
+
     //偏好设置
     private void setupShardPreference() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
@@ -265,6 +269,7 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
         }
     }
 
+
     private class TodoAdapter extends RecyclerView.Adapter<TodoHolder>{
 
         private List<Todo> mTodos;
@@ -303,4 +308,5 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
             ((Vibrator)getActivity().getSystemService(VIBRATOR_SERVICE)).vibrate(30);
         }
     }
+
 }
