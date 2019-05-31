@@ -53,10 +53,7 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
     private TextView mNullTodoListTextView;
     private DrawerLayout mDrawerLayout;
     private boolean mVibrate=true;
-
-    private int remainY;
-    private boolean isShow = true;
-
+    
     private static final String VIBRATE = "vibrate";
 
 
