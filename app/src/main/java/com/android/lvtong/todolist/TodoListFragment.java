@@ -53,7 +53,7 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
     private TextView mNullTodoListTextView;
     private DrawerLayout mDrawerLayout;
     private boolean mVibrate=true;
-    
+
     private static final String VIBRATE = "vibrate";
 
 
@@ -76,7 +76,6 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(getString(R.string.pref_top_imageview_switch))){
             mTop.setVisibility(sharedPreferences.getBoolean("top_imageview_switch",true)?View.VISIBLE:View.GONE);
-
         }
         if (key.equals(getString(R.string.pref_button_vibrate))){
             mVibrate = sharedPreferences.getBoolean("button_vibrate", true);
