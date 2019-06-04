@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".menu.AboutActivity"/>
+        <activity android:name=".menu.AboutActivity"
+            android:parentActivityName=".TodoListActivity"/>
         <activity android:name=".menu.SettingsActivity"
             android:parentActivityName=".TodoListActivity"/>
         <activity android:name=".TodoListActivity"

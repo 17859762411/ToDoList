@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     >
 
 
@@ -40,7 +41,7 @@
             android:autofillHints=""
             android:ems="10"
             android:gravity="start|top"
-            android:hint="@string/todo_title"
+            android:hint="@string/todo_title_hint"
             android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +69,7 @@
             android:autofillHints=""
             android:ems="10"
             android:gravity="start|top"
-            android:hint="@string/beizhu"
+            android:hint="@string/beizhu_hint"
             android:inputType="textMultiLine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

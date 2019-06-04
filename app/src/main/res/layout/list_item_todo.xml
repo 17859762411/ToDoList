@@ -31,7 +31,7 @@
             android:id="@+id/todo_beizhu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="8dp"
             android:singleLine="true"
             android:text="Todo Beizhu"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -47,7 +47,6 @@
         android:layout_gravity="center_vertical"
         android:background="@drawable/round_red"
         android:gravity="center"
-        android:textColor="@color/little_white"
         android:textSize="18sp"
         android:textStyle="bold" />
 

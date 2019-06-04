@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -83,6 +84,7 @@ public class TodoFragment extends Fragment {
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_todo, container, false);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setElevation(0);
         vibrator = (Vibrator)getActivity().getSystemService(VIBRATOR_SERVICE);
 
         mAddButton = (Button)v.findViewById(R.id.btn_add);

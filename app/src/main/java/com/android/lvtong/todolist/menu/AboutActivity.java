@@ -1,6 +1,7 @@
 package com.android.lvtong.todolist.menu;
 
 import android.os.Handler;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,11 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+        ActionBar actionBar = this.getSupportActionBar();
+        if (actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setElevation(0);
+        }
 
         mOpenSources = findViewById(R.id.open_source);
         mOpenSources.setOnClickListener(new View.OnClickListener() {
