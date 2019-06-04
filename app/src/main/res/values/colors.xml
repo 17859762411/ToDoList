@@ -13,6 +13,7 @@
     <color name="orange_red">#ff4f4f</color>
     <color name="gray">#7f7f7f</color>
     <color name="little_gray">#277F7F7F</color>
+    <color name="little_black">#957F7F7F</color>
     <color name="huawei_red">#ef1c25</color>
     <color name="fab">@color/google_blue</color>
     <color name="start_color">#FF8A65</color>

@@ -2,16 +2,16 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- 填充色 -->
-    <solid android:color="@color/google_blue"/>
+    <!--<solid android:color="@color/google_blue"/>-->
 
 
     <!-- 圆角弧度 -->
     <corners android:radius="5dp"/>
 
     <!-- 矩形边框 -->
-    <!--<stroke-->
-        <!--android:color="@color/colorPrimary"-->
-        <!--android:width="1dp" />-->
+    <stroke
+        android:color="@color/gray"
+        android:width="1dp" />
     <!-- 内部偏移 -->
     <padding
         android:left="10dp"

@@ -2,9 +2,9 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval"
     android:useLevel="false">
-    <solid
-        android:color="@color/google_red">
-    </solid>
+    <!--<solid-->
+        <!--android:color="@color/google_red">-->
+    <!--</solid>-->
     <size
         android:width="20dp"
         android:height="20dp"/>
@@ -13,9 +13,13 @@
         android:left="2dp"
         android:right="2dp"
         android:top="1dp"/>
-    <gradient
-        android:type="radial"
-        android:startColor="@color/huawei_red"
-        android:endColor="@color/google_red"
-        android:gradientRadius="32dp"/>
+    <!-- 矩形边框 -->
+    <stroke
+        android:color="@color/cardview_dark_background"
+        android:width="1dp" />
+    <!--<gradient-->
+        <!--android:type="radial"-->
+        <!--android:startColor="@color/huawei_red"-->
+        <!--android:endColor="@color/google_red"-->
+        <!--android:gradientRadius="32dp"/>-->
 </shape>

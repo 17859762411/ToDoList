@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/google_red</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="overlapAnchor">false</item>
+        <item name="android:buttonStyle">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -27,7 +28,12 @@
         <item name="android:background">@drawable/button</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
+    </style>
+    <style name="OKTVStyle" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/button_black</item>
         <item name="android:textColor">#ffffff</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="RoundButtonStyle" parent="Widget.AppCompat.Button.Borderless">
