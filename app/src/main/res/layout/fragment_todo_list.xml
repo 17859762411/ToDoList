@@ -84,6 +84,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:contentDescription="@string/app_name"
+        android:background="@drawable/button"
         android:src="@drawable/img068_slide"
         android:clickable="true"
         android:scaleType="fitXY"
