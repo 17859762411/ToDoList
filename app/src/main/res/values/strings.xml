@@ -8,6 +8,7 @@
     <string name="tianjia">确    定</string>
     <string name="tv_degree">重要程度</string>
     <string name="date_picker_title">Date of Todo :</string>
+    <string name="tv_date">时    间</string>
 
     <string name="icon_about">icon_about</string>
     <string name="version">1.0</string>
@@ -21,5 +22,7 @@
     <string name="task">任务</string>
     <string name="check_update">检查更新</string>
     <string name="pref_button_vibrate">button_vibrate</string>
-    <string name="no_todo_please_add">没有待办事项 快点击右下角添加吧！</string>
+    <string name="no_todo_please_add">没有待办事项\n点击右下角添加</string>
+    <string name="click_date">点击选择日期</string>
+
 </resources>

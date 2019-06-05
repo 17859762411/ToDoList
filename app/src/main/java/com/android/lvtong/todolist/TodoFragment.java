@@ -130,7 +130,6 @@ public class TodoFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (isSpinner){
                     String string = (String) mSpinner.getSelectedItem();
-                    Toast.makeText(getActivity(), "选择了："+string, Toast.LENGTH_SHORT).show();
                     mTodo.setmImportance(Integer.valueOf(string));
                 }
                 isSpinner=true;
