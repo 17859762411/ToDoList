@@ -10,12 +10,16 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -24,6 +28,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.android.lvtong.todolist.menu.AboutActivity;
+import com.android.lvtong.todolist.menu.SettingsActivity;
 
 import java.util.Date;
 import java.util.UUID;
@@ -177,6 +184,39 @@ public class TodoFragment extends Fragment {
 
         return v;
 
+    }
+
+    /**
+     * menu部分
+     */
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_todo_list, menu);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_ok:
+                if (TextUtils.isEmpty(mBeizhuField.getText())){
+                    mTodo.setmBeizhu("备注未填写");
+                }
+                if (TextUtils.isEmpty(mTitleField.getText())){
+                    Toast.makeText(getActivity(), "标题为空！", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getActivity(), "保存成功！", Toast.LENGTH_SHORT).show();
+                    getActivity().finish();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
