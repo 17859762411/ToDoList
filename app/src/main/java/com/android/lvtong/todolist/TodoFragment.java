@@ -50,8 +50,6 @@ public class TodoFragment extends Fragment {
     private EditText mBeizhuField;
     private Spinner mSpinner;
     private Button mDateButton;
-    private Button mAddButton;
-    private ArrayAdapter<String> mAdapter;
 
     Boolean isSpinner = false;
     private Vibrator vibrator;
@@ -68,6 +66,7 @@ public class TodoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
         UUID todoId = (UUID) getArguments().getSerializable(ARG_TODO_ID);
         mTodo = TodoLab.get(getActivity()).getTodo(todoId);
     }
@@ -75,9 +74,9 @@ public class TodoFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (TextUtils.isEmpty(mBeizhuField.getText())){
-            mTodo.setmBeizhu("备注未填写");
-        }
+//        if (TextUtils.isEmpty(mBeizhuField.getText())){
+//            mTodo.setmBeizhu("备注未填写");
+//        }
         if (TextUtils.isEmpty(mTodo.getmTitle())){
             TodoLab.get(getActivity()).removeTodo(mTodo);
         }else {
@@ -94,21 +93,21 @@ public class TodoFragment extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setElevation(0);
         vibrator = (Vibrator)getActivity().getSystemService(VIBRATOR_SERVICE);
 
-        mAddButton = (Button)v.findViewById(R.id.btn_add);
-        mAddButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (TextUtils.isEmpty(mBeizhuField.getText())){
-                    mTodo.setmBeizhu("备注未填写");
-                }
-                if (TextUtils.isEmpty(mTitleField.getText())){
-                    Toast.makeText(getActivity(), "标题为空！", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(getActivity(), "添加成功", Toast.LENGTH_SHORT).show();
-                    getActivity().finish();
-                }
-            }
-        });
+//        mAddButton = (Button)v.findViewById(R.id.btn_add);
+//        mAddButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (TextUtils.isEmpty(mBeizhuField.getText())){
+//                    mTodo.setmBeizhu("备注未填写");
+//                }
+//                if (TextUtils.isEmpty(mTitleField.getText())){
+//                    Toast.makeText(getActivity(), "标题为空！", Toast.LENGTH_SHORT).show();
+//                }else {
+//                    Toast.makeText(getActivity(), "添加成功", Toast.LENGTH_SHORT).show();
+//                    getActivity().finish();
+//                }
+//            }
+//        });
 
         //时间
         mDateButton = (Button)v.findViewById(R.id.button_date);
@@ -178,7 +177,9 @@ public class TodoFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                if (mBeizhuField.getText() == null){
+                    mBeizhuField.setError("不可为空");
+                }
             }
         });
 
@@ -192,7 +193,7 @@ public class TodoFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.fragment_todo_list, menu);
+        inflater.inflate(R.menu.menu_ok, menu);
     }
 
     @Override
@@ -204,10 +205,11 @@ public class TodoFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_ok:
-                if (TextUtils.isEmpty(mBeizhuField.getText())){
-                    mTodo.setmBeizhu("备注未填写");
-                }
+//                if (TextUtils.isEmpty(mBeizhuField.getText())){
+//                    mTodo.setmBeizhu("备注未填写");
+//                }
                 if (TextUtils.isEmpty(mTitleField.getText())){
+                    mTitleField.setError("不可为空");
                     Toast.makeText(getActivity(), "标题为空！", Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(getActivity(), "保存成功！", Toast.LENGTH_SHORT).show();

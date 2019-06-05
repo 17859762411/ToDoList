@@ -283,7 +283,7 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
         public void bind(Todo todo){
             mTodo = todo;
             mTitleTV.setText(mTodo.getmTitle());
-            mBeizhuTV.setText(mTodo.getmBeizhu());
+            mBeizhuTV.setText(mTodo.getmBeizhu()== null||mTodo.getmBeizhu().isEmpty()?"备注未填写":mTodo.getmBeizhu());
             mImportant.setText(String.valueOf(mTodo.getmImportance()));
         }
 

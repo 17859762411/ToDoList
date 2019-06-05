@@ -24,6 +24,7 @@ public class AboutActivity extends AppCompatActivity {
         if (actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setElevation(0);
+            actionBar.setTitle("关于");
         }
 
         mOpenSources = findViewById(R.id.open_source);
