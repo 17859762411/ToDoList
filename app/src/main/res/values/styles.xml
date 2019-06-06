@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#00000000</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">#000000</item>
         <item name="colorAccent">@color/google_red</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="overlapAnchor">false</item>
@@ -17,8 +17,8 @@
 
     <style name="SlideTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/google_blue</item>
-        <item name="colorPrimaryDark">@color/google_blue</item>
+        <item name="colorPrimary">#000000</item>
+        <item name="colorPrimaryDark">#000000</item>
         <item name="colorAccent">@color/google_red</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
         <item name="overlapAnchor">false</item>

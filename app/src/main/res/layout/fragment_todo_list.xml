@@ -73,8 +73,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/fab"
+        android:backgroundTint="@color/gray"
         android:src="@drawable/ic_fab_add"
+
         app:borderWidth="0dp"
         app:fabSize="normal" />
 </android.support.design.widget.CoordinatorLayout>
