@@ -1,6 +1,7 @@
 package com.android.lvtong.todolist;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -48,8 +50,8 @@ public class TodoFragment extends Fragment {
     private Todo mTodo;
     private EditText mTitleField;
     private EditText mBeizhuField;
-    private Spinner mSpinner;
     private Button mDateButton;
+    private Button mImportanceButton;
 
     Boolean isSpinner = false;
     private Vibrator vibrator;
@@ -74,9 +76,6 @@ public class TodoFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-//        if (TextUtils.isEmpty(mBeizhuField.getText())){
-//            mTodo.setmBeizhu("备注未填写");
-//        }
         if (TextUtils.isEmpty(mTodo.getmTitle())){
             TodoLab.get(getActivity()).removeTodo(mTodo);
         }else {
@@ -93,22 +92,6 @@ public class TodoFragment extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setElevation(0);
         vibrator = (Vibrator)getActivity().getSystemService(VIBRATOR_SERVICE);
 
-//        mAddButton = (Button)v.findViewById(R.id.btn_add);
-//        mAddButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (TextUtils.isEmpty(mBeizhuField.getText())){
-//                    mTodo.setmBeizhu("备注未填写");
-//                }
-//                if (TextUtils.isEmpty(mTitleField.getText())){
-//                    Toast.makeText(getActivity(), "标题为空！", Toast.LENGTH_SHORT).show();
-//                }else {
-//                    Toast.makeText(getActivity(), "添加成功", Toast.LENGTH_SHORT).show();
-//                    getActivity().finish();
-//                }
-//            }
-//        });
-
         //时间
         mDateButton = (Button)v.findViewById(R.id.button_date);
         updateDate();
@@ -122,22 +105,24 @@ public class TodoFragment extends Fragment {
                 dialog.show(manager, DIALOG_DATE);
             }
         });
-
-        mSpinner = (Spinner)v.findViewById(R.id.spinner);
-        mSpinner.setDropDownVerticalOffset(100);
-        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        //重要程度选择
+        mImportanceButton = (Button) v.findViewById(R.id.button_importance);
+        switch (mTodo.getmImportance()){
+            case 0:
+                mImportanceButton.setText("一般：0");
+                break;
+            case 1:
+                mImportanceButton.setText("不重要：1");
+                break;
+            case 2:
+                mImportanceButton.setText("重要：2");
+                break;
+                default:
+        }
+        mImportanceButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (isSpinner){
-                    String string = (String) mSpinner.getSelectedItem();
-                    mTodo.setmImportance(Integer.valueOf(string));
-                }
-                isSpinner=true;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onClick(View v) {
+                showListDialog();
             }
         });
         //标题
@@ -181,9 +166,7 @@ public class TodoFragment extends Fragment {
                 }
             }
         });
-
         return v;
-
     }
 
     /**
@@ -204,9 +187,6 @@ public class TodoFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_ok:
-//                if (TextUtils.isEmpty(mBeizhuField.getText())){
-//                    mTodo.setmBeizhu("备注未填写");
-//                }
                 if (TextUtils.isEmpty(mTitleField.getText())){
                     mTitleField.setError("不可为空");
                     Toast.makeText(getActivity(), "标题为空！", Toast.LENGTH_SHORT).show();
@@ -251,5 +231,21 @@ public class TodoFragment extends Fragment {
         //几年,月份,几号,星期
         CharSequence re = DateFormat.format(cs,date);
         return re.toString();
+    }
+    /**
+     * 列表Dialog
+     */
+    public void showListDialog(){
+        final String[] items = {"一般：0","不重要：1","重要：2"};
+        AlertDialog.Builder listDialog = new AlertDialog.Builder(getActivity());
+        listDialog.setTitle("请选择重要程度(默认为一般)：");
+        listDialog.setItems(items, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mTodo.setmImportance(which);
+                mImportanceButton.setText(items[which]);
+            }
+        });
+        listDialog.show();
     }
 }

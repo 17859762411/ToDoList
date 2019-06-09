@@ -4,13 +4,13 @@
     tools:context="com.android.lvtong.todolist.TodoActivity">
 
 
-    <!--<item-->
-        <!--android:id="@+id/time_choose"-->
-        <!--android:orderInCategory="100"-->
-        <!--android:icon="@drawable/time"-->
-        <!--app:showAsAction="ifRoom"-->
-        <!--android:title="选择"-->
-        <!--/>-->
+    <item
+        android:id="@+id/time_choose"
+        android:orderInCategory="100"
+        android:icon="@drawable/time_black"
+        app:showAsAction="ifRoom"
+        android:title="选择"
+        />
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

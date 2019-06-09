@@ -96,7 +96,7 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null){
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black);
         }
 
         mNullTodoListTextView = (TextView)view.findViewById(R.id.null_todo_list);
@@ -177,6 +177,9 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
                 intent2.setClass(getActivity(), AboutActivity.class);
                 startActivity(intent2);
                 return true;
+            case R.id.time_choose:
+                Toast.makeText(getActivity(), "暂无", Toast.LENGTH_SHORT).show();
+                return true;
                 default:
                     return super.onOptionsItemSelected(item);
         }
@@ -230,54 +233,65 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
                     if (mVibrate){
                         vibrateIt();
                     }
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("请选择以下操作之一：")
-                            .setPositiveButton("分享", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    ShareCompat.IntentBuilder
-                                            //传入Activity
-                                            .from(getActivity())
-                                            //设置数据
-                                            .setText("标题:"+mTodo.getmTitle()+"\n"
-                                                    +"备注:"+mTodo.getmBeizhu()+"\n"
-                                                    +"日期:"+TodoFragment.getDateString(mTodo.getmDate())+"\n"
-                                                    +"重要程度:"+mTodo.getmImportance())
-                                            //设置选择器标题
-                                            .setChooserTitle("分享")
-                                            //分享数据的类型
-                                            .setType("text/plain")
-                                            //启动
-                                            .startChooser();
-                                }
-                            })
-                            .setNegativeButton("删除", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                    builder.setTitle("确认要删除此代办事项?")
-                                            .setMessage("标题:"+mTodo.getmTitle()+"\n"
-                                                    +"日期:"+TodoFragment.getDateString(mTodo.getmDate())+"\n"
-                                                    +"重要程度:"+mTodo.getmImportance())
-                                            .setPositiveButton("确认", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    removeItem();
-                                                }
-                                            })
-                                            .setNegativeButton("取消",null)
-                                            .create().show();
-                                }
-                            })
-                            .create().show();
-
+                showListDialog();
                     return true;
                 }
+
+
             });
 
             mTitleTV = (TextView)itemView.findViewById(R.id.todo_title);
             mBeizhuTV = (TextView)itemView.findViewById(R.id.todo_beizhu);
             mImportant = (Button) itemView.findViewById(R.id.todo_importance);
+        }
+
+        /**
+         * 长按列表Dialog
+         */
+        private void showListDialog(){
+            final String[] items = {"删除","分享"};
+            AlertDialog.Builder listDialog = new AlertDialog.Builder(getActivity());
+            listDialog.setTitle("请选择以下操作之一：");
+            listDialog.setItems(items, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case 0:
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setTitle("确认要删除此代办事项?")
+                                    .setMessage("标题:"+mTodo.getmTitle()+"\n"
+                                            +"日期:"+TodoFragment.getDateString(mTodo.getmDate())+"\n"
+                                            +"重要程度:"+mTodo.getmImportance())
+                                    .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            removeItem();
+                                        }
+                                    })
+                                    .setNegativeButton("取消",null)
+                                    .create().show();
+                            break;
+                        case 1:
+                            ShareCompat.IntentBuilder
+                                    //传入Activity
+                                    .from(getActivity())
+                                    //设置数据
+                                    .setText("标题:"+mTodo.getmTitle()+"\n"
+                                            +"备注:"+mTodo.getmBeizhu()+"\n"
+                                            +"日期:"+TodoFragment.getDateString(mTodo.getmDate())+"\n"
+                                            +"重要程度:"+mTodo.getmImportance())
+                                    //设置选择器标题
+                                    .setChooserTitle("分享")
+                                    //分享数据的类型
+                                    .setType("text/plain")
+                                    //启动
+                                    .startChooser();
+                            break;
+                        default:
+                    }
+                }
+            });
+            listDialog.show();
         }
 
         public void bind(Todo todo){
@@ -333,5 +347,7 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
             ((Vibrator)getActivity().getSystemService(VIBRATOR_SERVICE)).vibrate(30);
         }
     }
+
+
 
 }
