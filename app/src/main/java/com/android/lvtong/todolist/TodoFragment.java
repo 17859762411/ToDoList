@@ -217,7 +217,7 @@ public class TodoFragment extends Fragment {
     private void updateDate() {
         if (mTodo.getmDate() != null){
             //日期格式化
-            mDateButton.setText(getDateString(mTodo.getmDate()));
+            mDateButton.setText(getDateStringYMDE(mTodo.getmDate()));
         }
     }
 
@@ -226,9 +226,20 @@ public class TodoFragment extends Fragment {
      * @param date Date时间戳
      * @return 返回string
      */
-    public static String getDateString(Date date) {
+    public static String getDateStringYMDE(Date date) {
         CharSequence cs = "yyyy, MMMM dd,EEEE";
         //几年,月份,几号,星期
+        CharSequence re = DateFormat.format(cs,date);
+        return re.toString();
+    }
+    /**将date对象转为年月日格式string
+     *
+     * @param date Date时间戳
+     * @return 返回string
+     */
+    public static String getDateStringYMD(Date date) {
+        CharSequence cs = "yyyy, MMMM dd";
+        //几年,月份,几号
         CharSequence re = DateFormat.format(cs,date);
         return re.toString();
     }

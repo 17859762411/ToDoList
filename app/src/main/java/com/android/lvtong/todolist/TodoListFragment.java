@@ -2,11 +2,17 @@ package com.android.lvtong.todolist;
 
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +23,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -41,11 +48,20 @@ import android.widget.Toast;
 import com.android.lvtong.todolist.menu.AboutActivity;
 import com.android.lvtong.todolist.menu.SettingsActivity;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
 import static android.content.Context.VIBRATOR_SERVICE;
 
 public class TodoListFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+
+    private HashSet<String> dateArray = new HashSet<>();
+    private HashSet<String> dateArrayUsed = new HashSet<>();
 
     private RecyclerView mTodoRecyclerView;
     private TodoAdapter mAdapter;
@@ -55,13 +71,17 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
     private DrawerLayout mDrawerLayout;
     private boolean mVibrate=true;
 
-    private static final String VIBRATE = "vibrate";
+    private IntentFilter intentFilter;
+    private TimeChangeReceiver timeChangeReceiver;
+    private String channelID ="1";
+    private CharSequence channelName = "channel_name";
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
 
     }
 
@@ -87,6 +107,11 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_TIME_TICK);
+        timeChangeReceiver = new TimeChangeReceiver();
+
+        getActivity().registerReceiver(timeChangeReceiver,intentFilter);
         View view =inflater.inflate(R.layout.fragment_todo_list,container,false);
         //实现toolbar
         final Toolbar mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
@@ -120,6 +145,13 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
+        TextView tv = (TextView)view.findViewById(R.id.test_tv);
+        tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("时间数组:"+dateArray);
+            }
+        });
 
         mFab = (FloatingActionButton)view.findViewById(R.id.fab);
         mFab.setOnClickListener(new View.OnClickListener() {
@@ -150,7 +182,43 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
     @Override
     public void onDestroy() {
         super.onDestroy();
+        getActivity().unregisterReceiver(timeChangeReceiver);
         PreferenceManager.getDefaultSharedPreferences(getActivity()).unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    /**
+     * 时间广播接收类
+     */
+    class TimeChangeReceiver extends BroadcastReceiver{
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().equals(Intent.ACTION_TIME_TICK)) {
+                Date date = new Date();
+                String dateformated = TodoFragment.getDateStringYMD(date);
+                Toast.makeText(context, "当前时间："+dateformated, Toast.LENGTH_SHORT).show();
+                if (dateArray.contains(dateformated) & !dateArrayUsed.contains(dateformated)){
+                    PendingIntent pendingIntent = PendingIntent.getActivity(getActivity(),0,intent,0);
+                    NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_HIGH);
+                    NotificationManager notificationManager = (NotificationManager)getActivity().getSystemService(NOTIFICATION_SERVICE);
+                    notificationManager.createNotificationChannel(channel);
+                    Notification notification = new NotificationCompat.Builder(getActivity())
+                            .setContentTitle("New Todos!")
+                            .setContentText(dateformated)
+                            .setSmallIcon(R.drawable.ic_launcher)
+                            .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher))
+                            .setContentIntent(pendingIntent)
+                            .setDefaults(NotificationCompat.DEFAULT_ALL)
+                            .setPriority(NotificationCompat.PRIORITY_MAX)
+                            .setChannelId(channelID)
+                            .setAutoCancel(true)
+                            .build();
+                    notificationManager.notify(1,notification);
+                    dateArray.remove(dateformated);
+                    dateArrayUsed.add(dateformated);
+                }
+            }
+        }
     }
     /**
      * menu部分
@@ -260,7 +328,7 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
                             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                             builder.setTitle("确认要删除此代办事项?")
                                     .setMessage("标题:"+mTodo.getmTitle()+"\n"
-                                            +"日期:"+TodoFragment.getDateString(mTodo.getmDate())+"\n"
+                                            +"日期:"+TodoFragment.getDateStringYMDE(mTodo.getmDate())+"\n"
                                             +"重要程度:"+mTodo.getmImportance())
                                     .setPositiveButton("确认", new DialogInterface.OnClickListener() {
                                         @Override
@@ -278,7 +346,7 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
                                     //设置数据
                                     .setText("标题:"+mTodo.getmTitle()+"\n"
                                             +"备注:"+mTodo.getmBeizhu()+"\n"
-                                            +"日期:"+TodoFragment.getDateString(mTodo.getmDate())+"\n"
+                                            +"日期:"+TodoFragment.getDateStringYMDE(mTodo.getmDate())+"\n"
                                             +"重要程度:"+mTodo.getmImportance())
                                     //设置选择器标题
                                     .setChooserTitle("分享")
@@ -327,6 +395,7 @@ public class TodoListFragment extends Fragment implements SharedPreferences.OnSh
         @Override
         public void onBindViewHolder(@NonNull TodoHolder todoHolder, int i) {
             Todo todo = mTodos.get(i);
+            dateArray.add(TodoFragment.getDateStringYMD(todo.getmDate()));
             todoHolder.bind(todo);
         }
 

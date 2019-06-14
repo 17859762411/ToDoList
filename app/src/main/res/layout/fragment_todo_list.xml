@@ -36,11 +36,22 @@
             style="@style/TVStyle"
             android:src="@drawable/img000_changed"
             android:clipToPadding="false"
-            android:contentDescription="@string/date_picker_title"
+            android:contentDescription="@string/todo_title"
             android:elevation="5dp"
             android:fitsSystemWindows="true"
             android:scaleType="fitXY"
             app:layout_collapseMode="parallax" />
+        <Button
+            android:id="@+id/test_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TVStyle"
+            android:text="测试按钮:打印Date数组"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:gravity="center"
+            />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
