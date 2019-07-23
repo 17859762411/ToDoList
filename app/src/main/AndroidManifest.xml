@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".SecondActivity"></activity>
         <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,8 +29,7 @@
         <activity
             android:name=".TodoListActivity"
             android:launchMode="singleTop"
-            android:theme="@style/SlideTheme">
-        </activity>
+            android:theme="@style/SlideTheme"></activity>
         <activity
             android:name=".TodoPagerActivity"
             android:parentActivityName=".TodoListActivity" />
