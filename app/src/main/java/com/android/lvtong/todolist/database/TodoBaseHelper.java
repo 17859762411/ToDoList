@@ -7,8 +7,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.android.lvtong.todolist.database.TodoDbSchema.TodoTable;
 
 public class TodoBaseHelper extends SQLiteOpenHelper {
+
     private static final int VERSION = 1;
     private static final String DATABASE_NAME = "todoBase.db";
+
     public TodoBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
     }
@@ -17,16 +19,12 @@ public class TodoBaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //SQL创建
         db.execSQL("create table " + TodoTable.NAME + "(" + " _id integer primary key autoincrement, " +
-                TodoTable.Cols.UUID + ", "
-                + TodoTable.Cols.TITLE + ", "
-                + TodoTable.Cols.BEIZHU + ", "
-                + TodoTable.Cols.IMPORTANCE + ", "
-                + TodoTable.Cols.DATE + ")"
-        );
+                   TodoTable.Cols.UUID + ", " + TodoTable.Cols.TITLE + ", " + TodoTable.Cols.BEIZHU + ", " +
+                   TodoTable.Cols.IMPORTANCE + ", " + TodoTable.Cols.DATE + ")");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        //目前不需要使用
     }
 }

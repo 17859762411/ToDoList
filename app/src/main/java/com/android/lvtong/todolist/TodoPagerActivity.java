@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -18,12 +17,11 @@ public class TodoPagerActivity extends AppCompatActivity {
 
     private static final String EXTRA_TODO_ID = "com.android.lvtong.todolist.todo_id";
 
-    private ViewPager mViewPager;
     private List<Todo> mTodos;
 
-    public static Intent newIntent(Context packageContext, UUID todoId)  {
-        Intent intent = new Intent(packageContext,TodoPagerActivity.class);
-        intent.putExtra(EXTRA_TODO_ID,todoId);
+    public static Intent newIntent(Context packageContext, UUID todoId) {
+        Intent intent = new Intent(packageContext, TodoPagerActivity.class);
+        intent.putExtra(EXTRA_TODO_ID, todoId);
         return intent;
     }
 
@@ -32,13 +30,14 @@ public class TodoPagerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_pager);
 
-        UUID todoId = (UUID)getIntent().getSerializableExtra(EXTRA_TODO_ID);
+        UUID todoId = (UUID) getIntent().getSerializableExtra(EXTRA_TODO_ID);
 
-        mViewPager = (ViewPager)findViewById(R.id.todo_view_pager);
+        ViewPager viewPager = findViewById(R.id.todo_view_pager);
 
-        mTodos = TodoLab.get(this).getmTodos();
+        mTodos = TodoLab.get(this)
+                        .getmTodos();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        mViewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
+        viewPager.setAdapter(new FragmentStatePagerAdapter(fragmentManager) {
             @Override
             public Fragment getItem(int i) {
                 Todo todo = mTodos.get(i);
@@ -51,9 +50,11 @@ public class TodoPagerActivity extends AppCompatActivity {
             }
         });
 
-        for (int i = 0;i<mTodos.size();i++){
-            if (mTodos.get(i).getmId().equals(todoId)){
-                mViewPager.setCurrentItem(i);
+        for (int i = 0; i < mTodos.size(); i++) {
+            if (mTodos.get(i)
+                      .getmId()
+                      .equals(todoId)) {
+                viewPager.setCurrentItem(i);
                 break;
             }
         }

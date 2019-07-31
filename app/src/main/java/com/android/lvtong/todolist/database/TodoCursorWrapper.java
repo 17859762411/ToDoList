@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public class TodoCursorWrapper extends CursorWrapper {
+
     /**
      * Creates a cursor wrapper.
      *
@@ -19,7 +20,7 @@ public class TodoCursorWrapper extends CursorWrapper {
         super(cursor);
     }
 
-    public Todo getTodo(){
+    public Todo getTodo() {
         String uuidString = getString(getColumnIndex(TodoTable.Cols.UUID));
         String title = getString(getColumnIndex(TodoTable.Cols.TITLE));
         String beizhu = getString(getColumnIndex(TodoTable.Cols.BEIZHU));

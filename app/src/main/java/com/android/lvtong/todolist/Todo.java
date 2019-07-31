@@ -4,26 +4,27 @@ import java.util.Date;
 import java.util.UUID;
 
 public class Todo {
+
     private UUID mId;
     private String mTitle;
     private String mBeizhu;
     private int mImportance;
     private Date mDate;
 
-    public Todo(){
+    Todo() {
         this(UUID.randomUUID());
     }
-    public Todo(UUID id){
+
+    public Todo(UUID id) {
         mId = id;
         mDate = new Date();
     }
 
-    public UUID getmId() {
+    UUID getmId() {
         return mId;
     }
 
-
-    public String getmTitle() {
+    String getmTitle() {
         return mTitle;
     }
 
@@ -31,7 +32,7 @@ public class Todo {
         this.mTitle = mTitle;
     }
 
-    public String getmBeizhu() {
+    String getmBeizhu() {
         return mBeizhu;
     }
 
@@ -39,7 +40,7 @@ public class Todo {
         this.mBeizhu = mBeizhu;
     }
 
-    public int getmImportance() {
+    int getmImportance() {
         return mImportance;
     }
 
@@ -47,7 +48,7 @@ public class Todo {
         this.mImportance = mImportance;
     }
 
-    public Date getmDate() {
+    Date getmDate() {
         return mDate;
     }
 

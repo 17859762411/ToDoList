@@ -1,8 +1,6 @@
 package com.android.lvtong.todolist;
 
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 public class SecondActivity extends SingleFragmentActivity {
 
@@ -10,5 +8,4 @@ public class SecondActivity extends SingleFragmentActivity {
     protected Fragment createFragment() {
         return new SecondFragment();
     }
-
 }

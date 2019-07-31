@@ -7,110 +7,88 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.android.lvtong.todolist.database.TodoBaseHelper;
 import com.android.lvtong.todolist.database.TodoCursorWrapper;
-import com.android.lvtong.todolist.database.TodoDbSchema;
 import com.android.lvtong.todolist.database.TodoDbSchema.TodoTable;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class TodoLab {
+class TodoLab {
+
     private static TodoLab sTodoLab;
 
-//    private List<Todo> mTodos;
-    private Context mContext;
     private SQLiteDatabase mDatabase;
 
-    public static TodoLab get(Context context) {
+    private TodoLab(Context context) {
+        Context context1 = context.getApplicationContext();
+        mDatabase = new TodoBaseHelper(context1).getWritableDatabase();
+    }
+
+    static TodoLab get(Context context) {
         if (sTodoLab == null) {
             sTodoLab = new TodoLab(context);
         }
         return sTodoLab;
     }
 
-    private TodoLab(Context context) {
-        mContext = context.getApplicationContext();
-        mDatabase = new TodoBaseHelper(mContext).getWritableDatabase();
-//        mTodos = new ArrayList<>();
-
-    }
-
-    public List<Todo> getmTodos() {
+    List<Todo> getmTodos() {
         List<Todo> todos = new ArrayList<>();
 
-        TodoCursorWrapper cursor = queryTodos(null,null);
-
-        try {
+        try (TodoCursorWrapper cursor = queryTodos(null, null)) {
             cursor.moveToFirst();
-            while (!cursor.isAfterLast()){
+            while (!cursor.isAfterLast()) {
                 todos.add(cursor.getTodo());
                 cursor.moveToNext();
             }
-        }finally {
-            cursor.close();
         }
         return todos;
     }
-    public void addmTodo(Todo todo) {
-        ContentValues values = getContentValues(todo);
 
-        mDatabase.insert(TodoTable.NAME,null,values);
-    }
-
-    public Todo getTodo(UUID id) {
-        TodoCursorWrapper cursor = queryTodos(
-                TodoTable.Cols.UUID + " = ?",
-                new String[]{ id.toString() }
-        );
-        try {
-            if (cursor.getCount() == 0 ){
-                return null;
-            }
-            cursor.moveToFirst();
-            return cursor.getTodo();
-        }finally {
-            cursor.close();
-        }
-    }
-
-    public void updateTodo(Todo todo){
-        String uuidString = todo.getmId().toString();
-        ContentValues values = getContentValues(todo);
-        mDatabase.update(TodoTable.NAME,values,
-                TodoTable.Cols.UUID + " = ?",
-                new String[]{ uuidString });
-    }
-    //删除
-    public void removeTodo(Todo todo) {
-        String uuidString = todo.getmId().toString();
-        mDatabase.delete(TodoTable.NAME,
-                TodoTable.Cols.UUID + " = ?",
-                new String[] { uuidString });
-}
-
-    private TodoCursorWrapper queryTodos(String whereClause, String[] whereArgs){
-        Cursor cursor = mDatabase.query(
-                TodoTable.NAME,
-                null,
-                whereClause,
-                whereArgs,
-                null,
-                null,
-                null
-        );
+    private TodoCursorWrapper queryTodos(String whereClause, String[] whereArgs) {
+        Cursor cursor = mDatabase.query(TodoTable.NAME, null, whereClause, whereArgs, null, null, null);
         return new TodoCursorWrapper(cursor);
     }
 
+    void addmTodo(Todo todo) {
+        ContentValues values = getContentValues(todo);
 
-    private static ContentValues getContentValues(Todo todo){
+        mDatabase.insert(TodoTable.NAME, null, values);
+    }
+
+    private static ContentValues getContentValues(Todo todo) {
         ContentValues values = new ContentValues();
-        values.put(TodoTable.Cols.UUID,todo.getmId().toString());
-        values.put(TodoTable.Cols.TITLE,todo.getmTitle());
-        values.put(TodoTable.Cols.BEIZHU,todo.getmBeizhu());
-        values.put(TodoTable.Cols.IMPORTANCE,todo.getmImportance());
-        values.put(TodoTable.Cols.DATE,todo.getmDate().getTime());
+        values.put(TodoTable.Cols.UUID, todo.getmId()
+                                            .toString());
+        values.put(TodoTable.Cols.TITLE, todo.getmTitle());
+        values.put(TodoTable.Cols.BEIZHU, todo.getmBeizhu());
+        values.put(TodoTable.Cols.IMPORTANCE, todo.getmImportance());
+        values.put(TodoTable.Cols.DATE, todo.getmDate()
+                                            .getTime());
 
         return values;
     }
 
+    Todo getTodo(UUID id) {
+        try (TodoCursorWrapper cursor = queryTodos(TodoTable.Cols.UUID + " = ?", new String[]{id.toString()})) {
+            if (cursor.getCount() == 0) {
+                return null;
+            }
+            cursor.moveToFirst();
+            return cursor.getTodo();
+        }
+    }
+
+    void updateTodo(Todo todo) {
+        String uuidString = todo.getmId()
+                                .toString();
+        ContentValues values = getContentValues(todo);
+        mDatabase.update(TodoTable.NAME, values, TodoTable.Cols.UUID + " = ?", new String[]{uuidString});
+    }
+
+    //删除
+    void removeTodo(Todo todo) {
+        String uuidString = todo.getmId()
+                                .toString();
+        mDatabase.delete(TodoTable.NAME, TodoTable.Cols.UUID + " = ?", new String[]{uuidString});
+    }
 }
